@@ -147,6 +147,5 @@ class Application:
         wd.find_element(By.LINK_TEXT, "home").click()
 
 
-
     def destroy(self):
         self.wd.quit()
