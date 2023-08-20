@@ -13,11 +13,13 @@ class AddNewMember(unittest.TestCase):
         self.wd = webdriver.Firefox()
         self.wd.implicitly_wait(30)
 
-    def open_home_page(self, wd):
+    def open_home_page(self):
+        wd = self.wd
         wd.get("https://localhost/addressbook/")
 
-    def login(self, wd, username="admin", password="secret"):
-        self.open_home_page(wd)
+    def login(self, username="admin", password="secret"):
+        wd = self.wd
+        self.open_home_page()
         wd.find_element(By.NAME, "user").click()
         wd.find_element(By.NAME, "user").clear()
         wd.find_element(By.NAME, "user").send_keys(username)
@@ -25,11 +27,13 @@ class AddNewMember(unittest.TestCase):
         wd.find_element(By.NAME, "pass").send_keys(password)
         wd.find_element(By.XPATH, "//input[@value='Login']").click()
 
-    def open_add_new_page(self, wd):
+    def open_add_new_page(self):
+        wd = self.wd
         wd.find_element(By.LINK_TEXT, "add new").click()
 
-    def add_new_member(self, wd, member):
-        self.open_add_new_page(wd)
+    def add_new_member(self, member):
+        wd = self.wd
+        self.open_add_new_page()
         # add new member
         # fill in basic info
         wd.find_element(By.NAME, "firstname").click()
@@ -111,18 +115,19 @@ class AddNewMember(unittest.TestCase):
         wd.find_element(By.NAME, "notes").send_keys(member.notes)
         # submit new member creation
         wd.find_element(By.XPATH, "//div[@id='content']/form/input[@name='submit']").click()
-        self.return_to_home_page(wd)
+        self.return_to_home_page()
 
-    def return_to_home_page(self, wd):
+    def return_to_home_page(self):
+        wd = self.wd
         wd.find_element(By.LINK_TEXT, "home").click()
 
-    def logout(self, wd):
+    def logout(self):
+        wd = self.wd
         wd.find_element(By.LINK_TEXT, "Logout").click()
 
     def test_add_new_member(self):
-        wd = self.wd
-        self.login(wd, username="admin", password="secret")
-        self.add_new_member(wd, Member(first_name="nfirst",
+        self.login(username="admin", password="secret")
+        self.add_new_member(Member(first_name="nfirst",
                                        middle_name="nmiddle",
                                        last_name="nlast",
                                        nickname="nnick",
@@ -146,7 +151,7 @@ class AddNewMember(unittest.TestCase):
                                        second_address="second address",
                                        phone2_number="12 bld",
                                        notes="new notes"))
-        self.logout(wd)
+        self.logout()
 
     def is_element_present(self, how, what):
         try: self.wd.find_element(by=how, value=what)
