@@ -6,6 +6,7 @@ from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
 import unittest
+from member import Member
 
 
 class AddNewMember(unittest.TestCase):
@@ -16,101 +17,100 @@ class AddNewMember(unittest.TestCase):
     def open_home_page(self, wd):
         wd.get("https://localhost/addressbook/")
 
-    def login(self, wd):
+    def login(self, wd, username="admin", password="secret"):
         wd.find_element(By.NAME, "user").click()
         wd.find_element(By.NAME, "user").clear()
-        wd.find_element(By.NAME, "user").send_keys("admin")
+        wd.find_element(By.NAME, "user").send_keys(username)
         wd.find_element(By.NAME, "pass").clear()
-        wd.find_element(By.NAME, "pass").send_keys("secret")
+        wd.find_element(By.NAME, "pass").send_keys(password)
         wd.find_element(By.XPATH, "//input[@value='Login']").click()
 
     def open_add_new_page(self, wd):
         wd.find_element(By.LINK_TEXT, "add new").click()
 
-    def add_new_member(self, wd):
+    def add_new_member(self, wd, member):
         # add new member
         # fill in basic info
         wd.find_element(By.NAME, "firstname").click()
         wd.find_element(By.NAME, "firstname").clear()
-        wd.find_element(By.NAME, "firstname").send_keys("nfirst")
-        # wd.find_element(By.NAME, "theform").click()
+        wd.find_element(By.NAME, "firstname").send_keys(member.first_name)
         wd.find_element(By.NAME, "middlename").click()
         wd.find_element(By.NAME, "middlename").clear()
-        wd.find_element(By.NAME, "middlename").send_keys("nmiddle")
-        # wd.find_element(By.NAME, "theform").click()
+        wd.find_element(By.NAME, "middlename").send_keys(member.middle_name)
         wd.find_element(By.NAME, "lastname").click()
         wd.find_element(By.NAME, "lastname").clear()
-        wd.find_element(By.NAME, "lastname").send_keys("nlast")
+        wd.find_element(By.NAME, "lastname").send_keys(member.last_name)
         wd.find_element(By.NAME, "nickname").click()
         wd.find_element(By.NAME, "nickname").clear()
-        wd.find_element(By.NAME, "nickname").send_keys("nnick")
+        wd.find_element(By.NAME, "nickname").send_keys(member.nickname)
         wd.find_element(By.NAME, "title").click()
         wd.find_element(By.NAME, "title").clear()
-        wd.find_element(By.NAME, "title").send_keys("ntitle")
+        wd.find_element(By.NAME, "title").send_keys(member.title)
         wd.find_element(By.NAME, "company").click()
         wd.find_element(By.NAME, "company").clear()
-        wd.find_element(By.NAME, "company").send_keys("ncompany")
+        wd.find_element(By.NAME, "company").send_keys(member.company)
         wd.find_element(By.NAME, "address").click()
         wd.find_element(By.NAME, "address").clear()
-        wd.find_element(By.NAME, "address").send_keys("new address")
+        wd.find_element(By.NAME, "address").send_keys(member.address)
         # fill in phone info
         wd.find_element(By.NAME, "home").click()
         wd.find_element(By.NAME, "home").clear()
-        wd.find_element(By.NAME, "home").send_keys("123444")
+        wd.find_element(By.NAME, "home").send_keys(member.home_number)
         wd.find_element(By.NAME, "mobile").click()
         wd.find_element(By.NAME, "mobile").clear()
-        wd.find_element(By.NAME, "mobile").send_keys("548")
+        wd.find_element(By.NAME, "mobile").send_keys(member.mobile_number)
         wd.find_element(By.NAME, "work").click()
         wd.find_element(By.NAME, "work").clear()
-        wd.find_element(By.NAME, "work").send_keys("5654")
+        wd.find_element(By.NAME, "work").send_keys(member.work_number)
         wd.find_element(By.NAME, "fax").click()
         wd.find_element(By.NAME, "fax").clear()
-        wd.find_element(By.NAME, "fax").send_keys("848")
+        wd.find_element(By.NAME, "fax").send_keys(member.fax_number)
         # fill in email info
         wd.find_element(By.NAME, "email").click()
         wd.find_element(By.NAME, "email").clear()
-        wd.find_element(By.NAME, "email").send_keys("email@gg.ru")
+        wd.find_element(By.NAME, "email").send_keys(member.email)
         wd.find_element(By.NAME, "email2").click()
         wd.find_element(By.NAME, "email2").clear()
-        wd.find_element(By.NAME, "email2").send_keys("email2@gg.ru")
+        wd.find_element(By.NAME, "email2").send_keys(member.email2)
         wd.find_element(By.NAME, "email3").click()
         wd.find_element(By.NAME, "email3").clear()
-        wd.find_element(By.NAME, "email3").send_keys("email3@gg.ru")
+        wd.find_element(By.NAME, "email3").send_keys(member.email3)
         wd.find_element(By.NAME, "homepage").click()
         wd.find_element(By.NAME, "homepage").clear()
-        wd.find_element(By.NAME, "homepage").send_keys("http://homepage")
+        wd.find_element(By.NAME, "homepage").send_keys(member.homepage)
         # fill in birthday info
         wd.find_element(By.NAME, "bday").click()
-        Select(wd.find_element(By.NAME, "bday")).select_by_visible_text("10")
-        wd.find_element(By.XPATH, "//div[@id='content']/form/select/option[12]").click()
+        Select(wd.find_element(By.NAME, "bday")).select_by_visible_text(member.birthday)
+        # wd.find_element(By.XPATH, "//div[@id='content']/form/select/option[@value = '"+member.birthday+"']").click()
+        wd.find_element(By.XPATH, "//div[@id='content']/form/select[@name='bday']/option[@value='"+member.birthday+"']").click()
         wd.find_element(By.NAME, "bmonth").click()
-        Select(wd.find_element(By.NAME, "bmonth")).select_by_visible_text("March")
-        wd.find_element(By.XPATH, "//div[@id='content']/form/select[2]/option[4]").click()
+        Select(wd.find_element(By.NAME, "bmonth")).select_by_visible_text(member.birthmonth)
+        wd.find_element(By.XPATH, "//div[@id='content']/form/select[@name='bmonth']/option[@value='"+member.birthmonth+"']").click()
         wd.find_element(By.NAME, "byear").click()
         wd.find_element(By.NAME, "byear").clear()
-        wd.find_element(By.NAME, "byear").send_keys("2000")
+        wd.find_element(By.NAME, "byear").send_keys(member.birthyear)
         # fill in anniversary info
         wd.find_element(By.NAME, "aday").click()
-        Select(wd.find_element(By.NAME, "aday")).select_by_visible_text("11")
-        wd.find_element(By.XPATH, "//div[@id='content']/form/select[3]/option[13]").click()
+        Select(wd.find_element(By.NAME, "aday")).select_by_visible_text(member.annyversary_day)
+        wd.find_element(By.XPATH, "//div[@id='content']/form/select[@name='aday']/option[@value='"+member.annyversary_day+"']").click()
         wd.find_element(By.NAME, "amonth").click()
-        Select(wd.find_element(By.NAME, "amonth")).select_by_visible_text("August")
-        wd.find_element(By.XPATH, "//div[@id='content']/form/select[4]/option[9]").click()
+        Select(wd.find_element(By.NAME, "amonth")).select_by_visible_text(member.annyversary_month)
+        wd.find_element(By.XPATH, "//div[@id='content']/form/select[@name='amonth']/option[@value='"+member.annyversary_month+"']").click()
         wd.find_element(By.NAME, "ayear").click()
         wd.find_element(By.NAME, "ayear").clear()
-        wd.find_element(By.NAME, "ayear").send_keys("2020")
+        wd.find_element(By.NAME, "ayear").send_keys(member.annyversary_year)
         # fill in secondary address
         wd.find_element(By.NAME, "address2").click()
         wd.find_element(By.NAME, "address2").clear()
-        wd.find_element(By.NAME, "address2").send_keys("second address")
+        wd.find_element(By.NAME, "address2").send_keys(member.second_address)
         wd.find_element(By.NAME, "phone2").click()
         wd.find_element(By.NAME, "phone2").clear()
-        wd.find_element(By.NAME, "phone2").send_keys("12 bld")
+        wd.find_element(By.NAME, "phone2").send_keys(member.phone2_number)
         wd.find_element(By.NAME, "notes").click()
         wd.find_element(By.NAME, "notes").clear()
-        wd.find_element(By.NAME, "notes").send_keys("new notes")
+        wd.find_element(By.NAME, "notes").send_keys(member.notes)
         # submit new member creation
-        wd.find_element(By.XPATH, "//div[@id='content']/form/input[21]").click()
+        wd.find_element(By.XPATH, "//div[@id='content']/form/input[@name='submit']").click()
 
     def return_to_home_page(self, wd):
         wd.find_element(By.LINK_TEXT, "home").click()
@@ -121,9 +121,32 @@ class AddNewMember(unittest.TestCase):
     def test_add_new_member(self):
         wd = self.wd
         self.open_home_page(wd)
-        self.login(wd)
+        self.login(wd, username="admin", password="secret")
         self.open_add_new_page(wd)
-        self.add_new_member(wd)
+        self.add_new_member(wd, Member(first_name="nfirst",
+                                       middle_name="nmiddle",
+                                       last_name="nlast",
+                                       nickname="nnick",
+                                       title="ntitle",
+                                       company="ncompany",
+                                       address="new address",
+                                       home_number="123444",
+                                       mobile_number="548",
+                                       work_number="5654",
+                                       fax_number="848",
+                                       email="email@gg.ru",
+                                       email2="email2@gg.ru",
+                                       email3="email3@gg.ru",
+                                       homepage="http://homepage",
+                                       birthday="30",
+                                       birthmonth="March",
+                                       birthyear="2000",
+                                       annyversary_day="21",
+                                       annyversary_month="August",
+                                       annyversary_year="2020",
+                                       second_address="second address",
+                                       phone2_number="12 bld",
+                                       notes="new notes"))
         self.return_to_home_page(wd)
         self.logout(wd)
 
