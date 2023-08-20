@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
@@ -81,7 +80,6 @@ class AddNewMember(unittest.TestCase):
         # fill in birthday info
         wd.find_element(By.NAME, "bday").click()
         Select(wd.find_element(By.NAME, "bday")).select_by_visible_text(member.birthday)
-        # wd.find_element(By.XPATH, "//div[@id='content']/form/select/option[@value = '"+member.birthday+"']").click()
         wd.find_element(By.XPATH, "//div[@id='content']/form/select[@name='bday']/option[@value='"+member.birthday+"']").click()
         wd.find_element(By.NAME, "bmonth").click()
         Select(wd.find_element(By.NAME, "bmonth")).select_by_visible_text(member.birthmonth)
