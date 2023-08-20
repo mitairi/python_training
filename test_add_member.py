@@ -17,6 +17,7 @@ class AddNewMember(unittest.TestCase):
         wd.get("https://localhost/addressbook/")
 
     def login(self, wd, username="admin", password="secret"):
+        self.open_home_page(wd)
         wd.find_element(By.NAME, "user").click()
         wd.find_element(By.NAME, "user").clear()
         wd.find_element(By.NAME, "user").send_keys(username)
@@ -28,6 +29,7 @@ class AddNewMember(unittest.TestCase):
         wd.find_element(By.LINK_TEXT, "add new").click()
 
     def add_new_member(self, wd, member):
+        self.open_add_new_page(wd)
         # add new member
         # fill in basic info
         wd.find_element(By.NAME, "firstname").click()
@@ -109,6 +111,7 @@ class AddNewMember(unittest.TestCase):
         wd.find_element(By.NAME, "notes").send_keys(member.notes)
         # submit new member creation
         wd.find_element(By.XPATH, "//div[@id='content']/form/input[@name='submit']").click()
+        self.return_to_home_page(wd)
 
     def return_to_home_page(self, wd):
         wd.find_element(By.LINK_TEXT, "home").click()
@@ -118,9 +121,7 @@ class AddNewMember(unittest.TestCase):
 
     def test_add_new_member(self):
         wd = self.wd
-        self.open_home_page(wd)
         self.login(wd, username="admin", password="secret")
-        self.open_add_new_page(wd)
         self.add_new_member(wd, Member(first_name="nfirst",
                                        middle_name="nmiddle",
                                        last_name="nlast",
@@ -145,7 +146,6 @@ class AddNewMember(unittest.TestCase):
                                        second_address="second address",
                                        phone2_number="12 bld",
                                        notes="new notes"))
-        self.return_to_home_page(wd)
         self.logout(wd)
 
     def is_element_present(self, how, what):
