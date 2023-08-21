@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from selenium.common.exceptions import NoSuchElementException
 import pytest
-from member import Member
-from application import Application
+from model.member import Member
+from fixture.application import Application
 
 @pytest.fixture
 def app(request):
