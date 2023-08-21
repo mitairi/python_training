@@ -11,7 +11,7 @@ def app(request):
     return fixture
 
 def test_add_new_member(app):
-    app.login(username="admin", password="secret")
+    app.session.login(username="admin", password="secret")
     app.add_new_member(Member(first_name="nfirst",
                                    middle_name="nmiddle",
                                    last_name="nlast",
@@ -36,7 +36,7 @@ def test_add_new_member(app):
                                    second_address="second address",
                                    phone2_number="12 bld",
                                    notes="new notes"))
-    app.logout()
+    app.session.logout()
 
 def is_element_present(self, how, what):
     try: self.app.wd.find_element(by=how, value=what)
